@@ -10,9 +10,6 @@
 
     <div class="container mx-auto my-8 p-8 bg-white shadow-md rounded-md max-w-md">
         <h1 class="text-2xl text-center font-semibold mb-6">Massage Reservation</h1>
-        <div id="success-message" class="hidden mb-4 col-span-2 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-md">
-        Reservation successful! Terima kasih atas pemesanannya.
-        </div>
         <form action="../Controller/reserveController.php" method="post" class="grid grid-cols-2 gap-4">
             <div class="mb-4 col-span-2">
                 <label for="name" class="block text-sm font-medium text-gray-600">Nama:</label>
@@ -69,7 +66,7 @@
                 <textarea type="text" id="location" name="lokasi" class="mt-1 p-2 w-full border rounded-md" required></textarea>
             </div>
 
-            <button type="submit" onclick="submitForm()" class="px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 focus:outline-none transition-colors">
+            <button type="submit" onclick="showAlert()" class="px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 focus:outline-none transition-colors">
                 Submit
             </button>
 
@@ -118,6 +115,9 @@
 
             // Tampilkan harga total
             document.getElementById("totalharga").value = totalHarga;
+        }
+        function showAlert() {
+            alert("Reservation successful! Terima kasih atas pemesanannya.");
         }
                 // Function to go back to the previous page
         function goBack() {

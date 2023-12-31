@@ -23,7 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             VALUES ('$user_id', '$nama', '$date', '$time', '$paket', '$tempat_pijat', '$pembayaran', '$lokasi', '$totalharga')";
 
     if ($db->query($sql) === TRUE) {
-        '<script>alert("Pemesanan Berhasil! Terima kasih atas pemesanannya.");</script>';
         header("Location: ../index.php");
     } else {
         echo json_encode(array("status" => "error", "message" => "Error: " . $sql . '\n' . $db->error));

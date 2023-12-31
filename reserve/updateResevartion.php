@@ -71,11 +71,11 @@
                 <label for="location" class="block text-sm font-medium text-gray-600">Location:</label>
                 <textarea type="text" id="location" name="lokasi" class="mt-1 p-2 w-full border rounded-md" required></textarea>
             </div>
-            <button type="submit" class="px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 focus:outline-none transition-colors">
+            <button type="submit" onclick="showAlert()" class="px-4 py-3 rounded-md bg-blue-500 text-white hover:bg-blue-600 focus:outline-none transition-colors ">
                 Update Reservation
             </button>
 
-        <button onclick="goBack()" class="px-4 py-2 rounded-md bg-gray-500 text-white hover:bg-gray-600 focus:outline-none transition-colors mt-4">
+        <button onclick="goBack()" class="px-4 py-3 rounded-md bg-gray-500 text-white hover:bg-gray-600 focus:outline-none transition-colors ">
             Back
         </button>
     </div>
@@ -120,6 +120,11 @@
             // Tampilkan harga total
             document.getElementById("totalharga").value = totalHarga;
         }
+
+        function showAlert() {
+            alert("Update Reservation successful! Terima kasih atas pemesanannya.");
+        }
+
                 // Function to go back to the previous page
         function goBack() {
             window.history.back();

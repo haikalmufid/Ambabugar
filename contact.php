@@ -30,26 +30,42 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-3">
-                    <?php
+                <?php
                         session_start();
 
-                        // Function to simulate getting user ID from the database
-                        function getUserIDFromDatabase($username) {
-                            // Replace this with your actual database query logic
-                            // For example, you might use a query like SELECT user_id FROM users WHERE username = '...';
-                            // This is just a placeholder, replace it with your actual logic.
-                            // Ensure you sanitize input and use prepared statements to prevent SQL injection.
-                            return 123; // Replace with the actual user ID from your database
-                        }
+                        require_once 'connection/db_connection.php';
 
                         // Cek apakah pengguna sudah login
                         if (isset($_SESSION["username"])) {
+                            // Function to get user ID from the database
+                            function getUserIDFromDatabase($username) {
+                                $conn = new DatabaseConnection();
+                                $db = $conn->getConnection();
+
+                                $username = mysqli_real_escape_string($db, $username);
+
+                                $sql = "SELECT user_id FROM user WHERE username = '$username'";
+                                $result = $db->query($sql);
+
+                                if (!$result) {
+                                    die('Error in SQL query: ' . $db->error);
+                                }
+
+                                if ($result->num_rows > 0) {
+                                    $row = $result->fetch_assoc();
+                                    return $row['user_id'];
+                                }
+
+                                $conn->closeConnection();
+                                return null;
+                            }
+
+                            // Get user ID
+                            $user_id = getUserIDFromDatabase($_SESSION["username"]);
+
                             // Check if the function exists before calling it
-                            if (function_exists('getUserIDFromDatabase')) {
-                                // Di sini, seharusnya Anda mendapatkan data pengguna dari database,
-                                // seperti ID pengguna, dan menyimpannya ke dalam $_SESSION['user_id']
-                                $user_id = getUserIDFromDatabase($_SESSION["username"]); // Gantilah dengan fungsi yang sesuai
-                                $_SESSION['user_id'] = $user_id; // Isi dengan identitas unik pengguna, seperti ID dari database
+                            if ($user_id !== null) {
+                                $_SESSION['user_id'] = $user_id;
 
                                 // Jika sudah login, tampilkan tombol logout
                                 echo '<div class="relative inline-block text-left">
@@ -68,8 +84,8 @@
                                     </div>
                                 </div>';
                             } else {
-                                // Handle the case where the function doesn't exist
-                                echo 'Error: getUserIDFromDatabase function is not defined.';
+                                // Handle the case where the user is not found
+                                echo 'Error: User not found.';
                             }
                         } else {
                             // Jika belum login, tampilkan tombol login dan signup
